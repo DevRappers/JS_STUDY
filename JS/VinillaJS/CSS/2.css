@@ -1,0 +1,17 @@
+body{
+    background-color: #ecf0f1;
+}
+
+.btn{
+    cursor: pointer;
+}
+
+h1{
+    color:#34495e;
+    /*transition을 사용하면 해당속성이 변할때의 이벤트를 정의할 수 있음*/
+    transition: color .5s ease-in-out;
+}
+
+.clicked{
+    color: #7f8c8d;
+}
