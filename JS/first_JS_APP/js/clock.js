@@ -10,21 +10,23 @@ date.getMinutes() = 분을 가져옴
 
 setInterval(fn, 1000) 첫번째로 실행할 함수와 두번째로 시간(초단위)을 입력받음
 */
-const clockContainer = document.querySelector(".js-clock"),
-      clockTitle = clockContainer.querySelector("h1");
+const clock = document.querySelector(".js-clock .clock__text");
 
-function getTime(){
-    const date = new Date();
-    const minutes = date.getMinutes();
-    const hours = date.getHours();
-    const seconds = date.getSeconds();
-    clockTitle.innerHTML = `${hours <10 ? `0${hours}`: hours} : ${minutes < 10 ? `0${minutes}`: minutes} : 
-    ${seconds < 10 ? `0${seconds}` : seconds}`;    
-}
+function getTime() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const time = `${hours < 10 ? `0${hours}` : hours}:${
+      minutes < 10 ? `0${minutes}` : minutes
+    }`;
+    clock.innerHTML = time;
+    return;
+  }
 
 function init() {
     getTime();
     setInterval(getTime,1000);
+    return;
 }
 
 init();

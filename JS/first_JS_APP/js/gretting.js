@@ -2,23 +2,37 @@
 // localStorage는 자신의 로컬 컴퓨터에 저장되는 정보임 
 // 저장시 : localStorage.setItem("key", value) 으로 정보를 저장함
 // 값을 가져올시 : localStorage.getItem("key") 로 값을 가져옴 
-const form = document.querySelector(".js-form"),
-    input = form.querySelector("input"),
-    greeting = document.querySelector(".js-greetings");
+const nameContainer = document.querySelector(".js-name");
 
-const USER_LS = "currentUser",
-    SHOWING_CN = "showing";
+function paintName(name) {
+    nameContainer.innerHTML = "";
+    const title = document.createElement("span");
+    title.className = "name__text";
+    title.innerHTML = `안녕하세요. ${name}씨`;
+    title.style.textAlign = "center";
+    nameContainer.appendChild(title);
+}
 
-function saveName(text) {
-    localStorage.setItem(USER_LS, text);
+function paintInput() {
+    const input = document.createElement("input");
+    input.placeholder = "이름이 무엇입니까?";
+    input.style.textAlign = "center";
+    input.type = "text";
+    input.className = "name__input";
+    const form = document.createElement("form");
+    form.addEventListener("submit", handleSubmit);
+    form.appendChild(input);
+    nameContainer.appendChild(form);
 }
 
 function handleSubmit(event) {
     // 이벤트의 기본동작을 막을 때 사용함 submit일 경우 다른 페이지로 넘어가는걸 막아줌 
     event.preventDefault();
-    const currentValue = input.value;
-    paintGreeting(currentValue);
-    saveName(currentValue);
+    const form = event.target;
+    const input = form.querySelector("input");
+    const value = input.value;
+    localStorage.setItem("username", value);
+    paintName(value);
 }
 
 function askForName() {
@@ -35,16 +49,11 @@ function paintGreeting(text) {
 }
 
 function loadName() {
-    // localStorage에 저장된 currentUser라는 키의 값을 가져옴
-    const currentUser = localStorage.getItem(USER_LS);
-
-    // 그 값이 null일 경우
-    if (currentUser === null) {
-        // 유저가 존재하지 않는 경우 이름 입력을 요청함.
-        askForName();
+    const name = localStorage.getItem("username");
+    if (name === null) {
+        paintInput();
     } else {
-        // 유저가 존재하는 경우
-        paintGreeting(currentUser);
+        paintName(name);
     }
 }
 
